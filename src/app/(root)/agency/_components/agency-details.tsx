@@ -31,13 +31,13 @@ import { saveActivityLogsNotification } from "@/actions/notification.actions";
 import { Button } from "@/components/ui/button";
 import { Loading } from "@/components/loading";
 import { v4 } from "uuid";
+import { toast } from "sonner";
 
 interface AgencyDetailsProps {
   data?: Partial<Agency>;
 }
 
 export const AgencyDetails: FC<AgencyDetailsProps> = ({ data }) => {
-  const { toast } = useToast();
   const router = useRouter();
   const [deletingAgency, setDeletingAgency] = useState(false);
   const form = useForm<z.infer<typeof agencyDetailsFormSchema>>({
@@ -114,9 +114,7 @@ export const AgencyDetails: FC<AgencyDetailsProps> = ({ data }) => {
         connectAccountId: "",
         goal: 5,
       });
-      toast({
-        title: "Created Agency",
-      });
+      toast("Created Agency");
 
       if (data?.id) return router.refresh();
       if (response) {
@@ -124,9 +122,7 @@ export const AgencyDetails: FC<AgencyDetailsProps> = ({ data }) => {
       }
     } catch (error) {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
+      toast.error("Oppse!", {
         description: "could not create your agency",
       });
     }
@@ -137,18 +133,14 @@ export const AgencyDetails: FC<AgencyDetailsProps> = ({ data }) => {
     setDeletingAgency(true);
     try {
       const res = await deleteAgency(data.id);
-      toast({
-        title: "Agency Deleted",
+
+      toast.success("Agency Deleted", {
         description: "Your agency has been deleted along with all sub accounts",
       });
       router.refresh();
     } catch (error) {
       console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "An error occured while deleting the agency",
-      });
+      toast.error("An error occured while deleting the agency");
     } finally {
       setDeletingAgency(false);
     }

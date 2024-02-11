@@ -1,6 +1,6 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, currentUser, useUser } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +10,8 @@ interface NavigationProps {
   user?: null | User;
 }
 
-export const Navigation: FC<NavigationProps> = ({}) => {
+export const Navigation: FC<NavigationProps> = async ({}) => {
+  const authUser = await currentUser();
   return (
     <div className="p-4 flex items-center justify-between relative">
       <aside className="flex items-center gap-2">
@@ -33,7 +34,7 @@ export const Navigation: FC<NavigationProps> = ({}) => {
             size: "sm",
           })}
         >
-          Login
+          {authUser ? "Dashboard" : "Login"}
         </Link>
         <UserButton />
         <ModeToggle />

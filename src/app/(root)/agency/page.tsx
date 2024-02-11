@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs";
 import { Plan } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { FC } from "react";
-import { AgencyDetails } from "./(auth)/_components/agency-details";
+import { AgencyDetails } from "./_components/agency-details";
 
 interface PageProps {
   searchParams: {

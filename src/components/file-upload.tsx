@@ -4,6 +4,7 @@ import { FC } from "react";
 import { Button } from "./ui/button";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { useToast } from "./ui/use-toast";
+import { toast } from "sonner";
 
 interface FileUploadProps {
   apiEndPoint: "agencyLogo" | "avatar" | "subaccountLogo";
@@ -14,7 +15,6 @@ interface FileUploadProps {
 export const FileUpload: FC<FileUploadProps> = ({ apiEndPoint, onChange, value }) => {
   //get the file type
   const type = value?.split(".").pop();
-  const { toast } = useToast();
 
   //to display the image / file
 
@@ -53,9 +53,7 @@ export const FileUpload: FC<FileUploadProps> = ({ apiEndPoint, onChange, value }
           onChange(res?.[0].url);
         }}
         onUploadError={(error: Error) => {
-          toast({
-            variant: "destructive",
-            title: "Oppse!",
+          toast.error("Oppse!", {
             description: "Something went wrong while uploading the file. Please try again.",
           });
         }}

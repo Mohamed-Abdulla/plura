@@ -2,6 +2,8 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import ModalProvider from "@/providers/model-provider";
+import { Toaster } from "sonner";
 const font = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,7 +20,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <ModalProvider>
+            {children}
+            <Toaster richColors />
+          </ModalProvider>
         </ThemeProvider>
       </body>
     </html>

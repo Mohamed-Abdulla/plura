@@ -1,5 +1,7 @@
 import { getNotificationAndUser } from "@/actions/notification.actions";
 import { verifyAndAcceptInvitation } from "@/actions/user.actions";
+import BlurPage from "@/components/blur-page";
+import { InfoBar } from "@/components/info-bar";
 import { Sidebar } from "@/components/sidebar";
 import { Unauthorized } from "@/components/unauthorized";
 import { currentUser } from "@clerk/nextjs";
@@ -36,7 +38,12 @@ const Layout: FC<LayoutProps> = async ({ children, params }) => {
   return (
     <div className="h-screen overflow-hidden">
       <Sidebar id={params.agencyId} type="agency" />
-      <div className="md:pl-[300px]">{children}</div>
+      <div className="md:pl-[300px]">
+        <div className="relative">
+          <InfoBar notifications={allNoti} />
+          <BlurPage>{children}</BlurPage>
+        </div>
+      </div>
     </div>
   );
 };
