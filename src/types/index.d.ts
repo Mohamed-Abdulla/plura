@@ -1,3 +1,5 @@
+import { Notification } from "@prisma/client";
+
 type NotificationWithUser =
   | ({
       User: {

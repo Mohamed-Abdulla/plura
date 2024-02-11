@@ -6,6 +6,19 @@ import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { saveActivityLogsNotification } from "./notification.actions";
 
+export const getAuthUserDetailsOnly = async (email: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAuthUserDetails = async () => {
   const user = await currentUser();
   if (!user) return;
