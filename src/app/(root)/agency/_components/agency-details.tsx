@@ -148,7 +148,7 @@ export const AgencyDetails: FC<AgencyDetailsProps> = ({ data }) => {
 
   return (
     <AlertDialog>
-      <Card className="w-full mt-2">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Agency Information</CardTitle>
           <CardDescription>

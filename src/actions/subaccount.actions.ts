@@ -1,3 +1,4 @@
+"use server";
 import { db } from "@/lib/db";
 import { SubAccount } from "@prisma/client";
 import { v4 } from "uuid";
@@ -95,4 +96,22 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
   });
 
   return res;
+};
+
+export const getSubaccountDetails = async (subaccountId: string) => {
+  const subaccount = await db.subAccount.findUnique({
+    where: {
+      id: subaccountId,
+    },
+  });
+  return subaccount;
+};
+
+export const deleteSubAccount = async (subaccountId: string) => {
+  const subaccount = await db.subAccount.delete({
+    where: {
+      id: subaccountId,
+    },
+  });
+  return subaccount;
 };

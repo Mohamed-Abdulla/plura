@@ -65,7 +65,7 @@ export const InfoBar: FC<InfoBarProps> = ({ notifications, subAccountId, classNa
                 </SheetDescription>
               </SheetHeader>
               {allNotifications?.map((notification) => (
-                <div key={notification.id} className="flex flex-col gap-y-2 mb-2 overflow-x-scroll text-ellipsis">
+                <div key={notification.id} className="flex flex-col gap-y-2 mb-2 text-sm text-ellipsis">
                   <div className="flex gap-2">
                     <Avatar>
                       <AvatarImage src={notification.User.avatarUrl} alt="Profile Picture" />

@@ -15,6 +15,7 @@ import { useModal } from "@/hooks/use-modal";
 import { SubAccountDetails } from "@/app/(root)/subaccount/_components/subaccount-details";
 import { Separator } from "./ui/separator";
 import { icons } from "@/lib/constants";
+import { CreateSubAccount } from "@/app/(root)/agency/[agencyId]/all-subaccounts/_components/create-sub-account";
 
 interface MenuOptionsProps {
   defaultOpen?: boolean;
@@ -73,14 +74,14 @@ export const MenuOptions: FC<MenuOptionsProps> = ({
                 </div>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80 h-[340px] mt-4 z-[200]">
-              <Command className="rounded-lg">
+            <PopoverContent className="w-80 h-[320px] mt-4 z-[200]">
+              <Command className="rounded-lg ">
                 <CommandInput placeholder="Search Accounts..." />
                 <CommandList className="pb-16">
                   <CommandEmpty> No results found</CommandEmpty>
                   {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && user?.Agency && (
                     <CommandGroup heading="Agency">
-                      <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
+                      <CommandItem className="!bg-transparent my-2 text-primary border-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
                         {defaultOpen ? (
                           <Link href={`/agency/${user?.Agency?.id}`} className="flex gap-4 w-full h-full">
                             <div className="relative w-16">
@@ -161,7 +162,7 @@ export const MenuOptions: FC<MenuOptionsProps> = ({
                 </CommandList>
                 {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && (
                   <SheetClose>
-                    <Button
+                    {/* <Button
                       className="w-full flex gap-2"
                       onClick={() => {
                         setOpen(
@@ -180,7 +181,8 @@ export const MenuOptions: FC<MenuOptionsProps> = ({
                     >
                       <PlusCircleIcon size={15} />
                       Create Sub Account
-                    </Button>
+                    </Button> */}
+                    <CreateSubAccount user={user} className="w-full my-2" />
                   </SheetClose>
                 )}
               </Command>

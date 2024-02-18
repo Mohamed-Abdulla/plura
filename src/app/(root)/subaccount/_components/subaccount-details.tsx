@@ -84,6 +84,7 @@ export const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, a
       setClose();
       router.refresh();
     } catch (error) {
+      console.error(error);
       toast.error("Oppse!", {
         description: "Could not save sub account details.",
       });
