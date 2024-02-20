@@ -1,3 +1,4 @@
+import { getMedia } from "@/actions/media.actions";
 import {
   __getUsersWithAgencySubAccountPermissionsSidebarOptions,
   getAuthUserDetails,
@@ -27,3 +28,6 @@ type AuthUserWithAgencySidebarOptionsSubAccounts = Prisma.PromiseReturnType<type
 type UsersWithAgencySubAccountPermissionsSidebarOptions = Prisma.PromiseReturnType<
   typeof __getUsersWithAgencySubAccountPermissionsSidebarOptions
 >;
+
+type GetMediaData = Prisma.PromiseReturnType<typeof getMedia>;
+type CreateMediaType = Prisma.MediaCreateWithoutSubaccountInput;
