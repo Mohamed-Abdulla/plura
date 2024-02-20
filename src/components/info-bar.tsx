@@ -23,6 +23,8 @@ export const InfoBar: FC<InfoBarProps> = ({ notifications, subAccountId, classNa
   const [allNotifications, setAllNotifications] = useState(notifications);
   const [showAll, setShowAll] = useState(true);
 
+  console.log("notifications", notifications);
+
   const handleClick = () => {
     if (!showAll) {
       setAllNotifications(notifications);

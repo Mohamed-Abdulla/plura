@@ -1,4 +1,5 @@
-import { verifyAndAcceptInvitation } from "@/actions/user.actions";
+import { getNotificationAndUser } from "@/actions/notification.actions";
+import { getAuthUserDetails, verifyAndAcceptInvitation } from "@/actions/user.actions";
 import { InfoBar } from "@/components/info-bar";
 import { Sidebar } from "@/components/sidebar";
 import { Unauthorized } from "@/components/unauthorized";
@@ -21,6 +22,25 @@ const Layout: FC<LayoutProps> = async ({ children, params: { subaccountId } }) =
   if (!user) return redirect("/");
 
   let notifications: any = [];
+
+  if (!user.privateMetadata.role) {
+    return <Unauthorized />;
+  } else {
+    const allPermissions = await getAuthUserDetails();
+    const hasPermission = allPermissions?.Permissions.find(
+      (permission) => subaccountId === permission.subAccountId && permission.access
+    );
+    if (!hasPermission) return <Unauthorized />;
+  }
+
+  const allNotifications = await getNotificationAndUser(agencyId);
+
+  if (user.privateMetadata.role === "AGENCY_ADMIN" || user.privateMetadata.role === "AGENCY_OWNER") {
+    notifications = allNotifications;
+  } else {
+    const filteredNoti = allNotifications?.filter((item) => item.subAccountId === subaccountId);
+    if (filteredNoti) notifications = filteredNoti;
+  }
 
   return (
     <div className="h-screen overflow-hidden">
