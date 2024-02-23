@@ -4,7 +4,7 @@ import {
   getAuthUserDetails,
   getUserPermissions,
 } from "@/actions/user.actions";
-import { Notification, Prisma } from "@prisma/client";
+import { Contact, Lane, Notification, Prisma, Tag, Ticket } from "@prisma/client";
 
 type NotificationWithUser =
   | ({
@@ -30,4 +30,14 @@ type UsersWithAgencySubAccountPermissionsSidebarOptions = Prisma.PromiseReturnTy
 >;
 
 type GetMediaData = Prisma.PromiseReturnType<typeof getMedia>;
+
 type CreateMediaType = Prisma.MediaCreateWithoutSubaccountInput;
+
+type TicketAndTags = Ticket & {
+  Tags: Tag[];
+  Assigned: User | null;
+  Customer: Contact | null;
+};
+type LaneDetail = Lane & {
+  Tickets: TicketAndTags[];
+};

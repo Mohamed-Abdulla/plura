@@ -204,7 +204,7 @@ export const MenuOptions: FC<MenuOptionsProps> = ({
                     }
 
                     return (
-                      <CommandItem key={option.id} className="md:w-[320px] w-full">
+                      <CommandItem key={option.id} className="md:w-[320px] w-full" value={option.id}>
                         <Link
                           href={option.link}
                           className="flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]"
