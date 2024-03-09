@@ -8,6 +8,9 @@ import { Pipeline } from "@prisma/client";
 import { Flag, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import { LaneForm } from "./lane/lane-form";
+import { PipelineLane } from "./lane/pipleline-lane";
 
 interface PipelineViewProps {
   lanes: LaneDetail[];
@@ -28,27 +31,52 @@ export const PipelineView: FC<PipelineViewProps> = ({ pipelineDetails, pipelineI
   const handleAddLane = () => {
     setOpen(
       <CustomModal title=" Create A Lane" subheading="Lanes allow you to group tickets">
-        hey
+        <LaneForm pipelineId={pipelineId} />
       </CustomModal>
     );
   };
 
+  const onDragEnd = (result: DropResult) => {};
   return (
-    <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4 use-automation-zoom-in">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl">{pipelineDetails?.name}</h1>
-        <Button className="flex items-center gap-4" onClick={handleAddLane}>
-          <Plus size={15} />
-          Create Lane
-        </Button>
-      </div>
-      {allLanes.length == 0 && (
-        <div className="flex items-center justify-center w-full flex-col">
-          <div className="opacity-100">
-            <Flag width="100%" height="100%" className="text-muted-foreground" />
-          </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4 use-automation-zoom-in">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl">{pipelineDetails?.name}</h1>
+          <Button className="flex items-center gap-4" onClick={handleAddLane}>
+            <Plus size={15} />
+            Create Lane
+          </Button>
         </div>
-      )}
-    </div>
+        <Droppable droppableId="lanes" type="lane" direction="horizontal" key="lanes">
+          {(provided) => (
+            <div
+              className="flex item-center gap-x-2 overflow-scroll"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              <div className="flex mt-4">
+                {allLanes.map((lane, index) => (
+                  <PipelineLane
+                    index={index}
+                    key={lane.id}
+                    subaccountId={subaccountId}
+                    pipelineId={pipelineId}
+                    laneDetails={lane}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </Droppable>
+
+        {allLanes.length == 0 && (
+          <div className="flex items-center justify-center w-full flex-col">
+            <div className="opacity-100">
+              <Flag width="100%" height="100%" className="text-muted-foreground" />
+            </div>
+          </div>
+        )}
+      </div>
+    </DragDropContext>
   );
 };

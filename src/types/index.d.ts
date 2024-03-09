@@ -1,4 +1,5 @@
 import { getMedia } from "@/actions/media.actions";
+import { _getTicketsWithAllRelations, getTicketWithTags } from "@/actions/tickets.actions";
 import {
   __getUsersWithAgencySubAccountPermissionsSidebarOptions,
   getAuthUserDetails,
@@ -41,3 +42,6 @@ type TicketAndTags = Ticket & {
 type LaneDetail = Lane & {
   Tickets: TicketAndTags[];
 };
+
+type TicketWithTags = Prisma.PromiseReturnType<typeof getTicketWithTags>;
+type TicketDetails = Prisma.PromiseReturnType<typeof _getTicketsWithAllRelations>;

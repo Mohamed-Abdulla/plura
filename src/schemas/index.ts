@@ -45,3 +45,13 @@ export const mediaSchema = z.object({
 export const createPipelineFormSchema = z.object({
   name: z.string().min(1),
 });
+export const LaneFormSchema = z.object({
+  name: z.string().min(1),
+});
+
+const currencyNumberRegex = /^\d+(\.\d{1,2})?$/;
+export const TicketFormSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().optional(),
+  value: z.string().refine((value) => currencyNumberRegex.test(value), { message: "Value must be a valid price" }),
+});
